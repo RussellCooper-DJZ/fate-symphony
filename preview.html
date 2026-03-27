@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>RussellCooper Keygen — Fate Symphony</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #000; font-family: 'Courier New', 'Lucida Console', monospace; overflow: hidden; }
+  canvas { display: block; }
+  #overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  #box { border: 2px solid #00ff41; background: rgba(0,0,0,0.92); padding: 0; width: 860px; max-width: 98vw; font-size: 13px; line-height: 1.5; color: #00ff41; }
+  .row { padding: 2px 12px; white-space: pre; }
+  .sep { color: #00ff41; padding: 0 0; }
+  .title-ascii { color: #00ff41; font-weight: bold; }
+  .title-dim   { color: #006614; }
+  .subtitle    { color: #00ffff; font-weight: bold; text-align: center; }
+  .info        { color: #00ffff; }
+  .hex         { color: #00cc33; }
+  .hex-bright  { color: #00ff41; font-weight: bold; }
+  .bar-done    { color: #00ff41; font-weight: bold; }
+  .bar-cyan    { color: #00ffff; font-weight: bold; }
+  .bar-yellow  { color: #ffff00; font-weight: bold; }
+  .serial      { color: #ffff00; font-weight: bold; }
+  .license     { color: #00ffff; font-weight: bold; }
+  .reg         { color: #00ff41; font-weight: bold; }
+  .reg-flash   { color: #ffff00; font-weight: bold; }
+  .footer      { color: #00ffff; font-weight: bold; text-align: center; }
+  .matrix-bg   { color: #003300; font-size: 11px; }
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+<div id="overlay">
+  <div id="box">
+    <div class="row sep">╔══════════════════════════════════════════════════════════════════════════════╗</div>
+    <div class="row sep">║                                                                              ║</div>
+    <div class="row title-ascii">║  ██████╗ ██╗   ██╗███████╗███████╗███████╗██╗     ██╗                       ║</div>
+    <div class="row title-ascii">║  ██╔══██╗██║   ██║██╔════╝██╔════╝██╔════╝██║     ██║                       ║</div>
+    <div class="row title-ascii">║  ██████╔╝██║   ██║███████╗███████╗█████╗  ██║     ██║                       ║</div>
+    <div class="row title-dim" >║  ██╔══██╗██║   ██║╚════██║╚════██║██╔══╝  ██║     ██║                       ║</div>
+    <div class="row title-dim" >║  ██║  ██║╚██████╔╝███████║███████║███████╗███████╗███████╗                   ║</div>
+    <div class="row title-dim" >║  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝╚══════╝╚══════╝                   ║</div>
+    <div class="row sep">║                                                                              ║</div>
+    <div class="row subtitle">║         C O O P E R   ·   K E Y G E N   M U S I C   E D I T I O N          ║</div>
+    <div class="row subtitle">║              Beethoven Symphony No.5 Op.67 — Fate                            ║</div>
+    <div class="row sep">║                                                                              ║</div>
+    <div class="row sep">╠══════════════════════════════════════════════════════════════════════════════╣</div>
+    <div class="row info">║  Target   : Beethoven Op.67 Fate Symphony                                    ║</div>
+    <div class="row info">║  Engine   : Additive Synthesis + ADSR + Schroeder Reverb                    ║</div>
+    <div class="row info">║  Waveforms: Strings / Brass / Bass / Timpani                                 ║</div>
+    <div class="row info">║  Output   : 44100 Hz · 16-bit PCM · Mono WAV                                 ║</div>
+    <div class="row info">║  Author   : RussellCooper  [github.com/RussellCooper-DJZ]                    ║</div>
+    <div class="row sep">║                                                                              ║</div>
+    <div class="row sep">╠══════════════════════════════════════════════════════════════════════════════╣</div>
+    <div class="row bar-yellow">║  Analyzing binary patterns...                                                ║</div>
+    <div class="row hex">║  1A3F:  4D 61 74 68 20 69 73 20 6D 75 73 69 63 2E 2E 2E  |Math is music...|  ║</div>
+    <div class="row hex">║  0042:  73 69 6E 28 74 2A 66 29 20 3D 20 6D 75 73 69 63  |sin(t*f) = music|  ║</div>
+    <div class="row hex">║  FF00:  42 65 65 74 68 6F 76 65 6E 20 4F 70 2E 36 37 21  |Beethoven Op.67!|  ║</div>
+    <div class="row hex-bright">║  DEAD:  DA DA DA  DAA  DA DA DA  DAA  DA DA DA  DAA...   |fate motif loop |  ║</div>
+    <div class="row hex-bright">║  BEEF:  47 34 20 45 62 34 20 46 34 20 44 34 20 43 34 21  |G4 Eb4 F4 D4 C4!|  ║</div>
+    <div class="row sep">╠══════════════════════════════════════════════════════════════════════════════╣</div>
+    <div class="row bar-done">║  Decoding score data         [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-done">║  Synthesizing strings        [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-done">║  Synthesizing brass          [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-done">║  Synthesizing bass           [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-cyan">║  Applying ADSR envelopes     [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-cyan">║  Schroeder reverb            [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-yellow">║  Mixing voices               [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-yellow">║  Peak normalize + limiter    [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-done">║  Encoding 16-bit PCM         [████████████████████] 100.0% ✓               ║</div>
+    <div class="row bar-done">║  Writing WAV output          [████████████████████] 100.0% ✓               ║</div>
+    <div class="row sep">╠══════════════════════════════════════════════════════════════════════════════╣</div>
+    <div class="row bar-done">║  ✓ Synthesis complete!  Duration: 16.8s  →  fate_symphony.wav               ║</div>
+    <div class="row sep">╠══════════════════════════════════════════════════════════════════════════════╣</div>
+    <div class="row sep">║                                                                              ║</div>
+    <div class="row serial" id="serial">║  Serial  :  M645N-64A3K-BF6M8-RQAMK-2LJ49                                   ║</div>
+    <div class="row serial">║  Hash    :  56CABA9F7C989C28...                                               ║</div>
+    <div class="row license">║  License :  RussellCooper — Embedded Systems Engineer                        ║</div>
+    <div class="row sep">║                                                                              ║</div>
+    <div class="row sep">╠══════════════════════════════════════════════════════════════════════════════╣</div>
+    <div class="row reg" id="reg1">║  ██████╗ ███████╗ ██████╗ ██╗███████╗████████╗███████╗██████╗ ██╗           ║</div>
+    <div class="row reg" id="reg2">║  ██╔══██╗██╔════╝██╔════╝ ██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗██║          ║</div>
+    <div class="row reg-flash" id="reg3">║  ██████╔╝█████╗  ██║  ███╗██║███████╗   ██║   █████╗  ██████╔╝██║          ║</div>
+    <div class="row reg-flash" id="reg4">║  ██╔══██╗██╔══╝  ██║   ██║██║╚════██║   ██║   ██╔══╝  ██╔══██╗╚═╝          ║</div>
+    <div class="row reg" id="reg5">║  ██║  ██║███████╗╚██████╔╝██║███████║   ██║   ███████╗██║  ██║██╗           ║</div>
+    <div class="row reg" id="reg6">║  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝           ║</div>
+    <div class="row sep">║                                                                              ║</div>
+    <div class="row footer">║      ♪  fate_symphony.wav  ·  Play: aplay fate_symphony.wav  ♪              ║</div>
+    <div class="row sep">╚══════════════════════════════════════════════════════════════════════════════╝</div>
+  </div>
+</div>
+
+<script>
+// Matrix rain canvas
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const CHARS = 'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789ABCDEF∑∏∫∂∇∆√∞≈≠';
+const FONT_SIZE = 14;
+const cols = Math.floor(canvas.width / FONT_SIZE);
+const drops = Array.from({length: cols}, () => Math.random() * -50);
+
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  for (let i = 0; i < drops.length; i++) {
+    const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+    const x = i * FONT_SIZE;
+    const y = drops[i] * FONT_SIZE;
+    // Head: bright white
+    if (drops[i] > 0) {
+      ctx.font = `bold ${FONT_SIZE}px 'Courier New'`;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(ch, x, y);
+      // Body: green gradient
+      for (let j = 1; j < 20; j++) {
+        const alpha = 1 - j / 20;
+        ctx.fillStyle = `rgba(0, ${Math.floor(200 * alpha + 55)}, 0, ${alpha})`;
+        const prevCh = CHARS[Math.floor(Math.random() * CHARS.length)];
+        ctx.fillText(prevCh, x, y - j * FONT_SIZE);
+      }
+    }
+    if (drops[i] * FONT_SIZE > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i] += 0.5;
+  }
+}
+
+setInterval(drawMatrix, 50);
+
+// Flash REGISTERED
+const regEls = ['reg1','reg2','reg3','reg4','reg5','reg6'].map(id => document.getElementById(id));
+let flash = false;
+setInterval(() => {
+  flash = !flash;
+  regEls.forEach((el, i) => {
+    if (el) el.style.color = flash ? '#ffff00' : (i >= 2 && i <= 3 ? '#ffff00' : '#00ff41');
+  });
+}, 600);
+
+// Scramble serial
+const serialEl = document.getElementById('serial');
+const REAL_SERIAL = '║  Serial  :  M645N-64A3K-BF6M8-RQAMK-2LJ49                                   ║';
+const CHARS2 = '0123456789ABCDEF!@#$%^&*';
+let scrambleFrame = 0;
+const scrambleInterval = setInterval(() => {
+  scrambleFrame++;
+  if (scrambleFrame > 15) { serialEl.textContent = REAL_SERIAL; clearInterval(scrambleInterval); return; }
+  let out = '';
+  for (let ch of REAL_SERIAL) {
+    if (scrambleFrame > 12 || ch === ' ' || ch === ':' || ch === '║' || ch === '-') out += ch;
+    else if (Math.random() < scrambleFrame / 14) out += ch;
+    else out += CHARS2[Math.floor(Math.random() * CHARS2.length)];
+  }
+  serialEl.textContent = out;
+}, 80);
+</script>
+</body>
+</html>
