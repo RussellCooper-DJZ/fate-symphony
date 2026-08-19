@@ -15,7 +15,7 @@
   time variable t. No audio files. No MIDI. Just math.
 """
 
-import struct, math, sys, os, time, wave, array
+import argparse, struct, math, sys, os, time, wave, array
 
 # ─────────────────────────────────────────────────────────────────
 #  CONSTANTS
@@ -325,17 +325,24 @@ SCORE = {
 # ─────────────────────────────────────────────────────────────────
 #  SYNTHESIS ENGINE
 # ─────────────────────────────────────────────────────────────────
-def render_voice(events: list, sr: int = SAMPLE_RATE) -> list:
-    """Render a list of note events to a PCM sample buffer."""
-    # Pre-calculate total length
+def render_voice(events: list, sr: int = SAMPLE_RATE, max_seconds: float | None = None) -> list:
+    """Render a list of note events to a PCM sample buffer.
+
+    ``max_seconds`` creates a deterministic preview without allocating the full
+    score. It is the primary memory-control mechanism for low-resource renders.
+    """
     total_beats = sum(e[1] for e in events)
     total_samples = int(total_beats * BEAT * sr) + sr  # +1s tail
+    if max_seconds is not None:
+        total_samples = min(total_samples, max(1, int(max_seconds * sr)))
     buf = [0.0] * total_samples
 
     t_sample = 0
     for (pitch, dur_beats, vel, inst) in events:
+        if t_sample >= total_samples:
+            break
         dur_sec = dur_beats * BEAT
-        n_samples = int(dur_sec * sr)
+        n_samples = min(int(dur_sec * sr), total_samples - t_sample)
 
         if pitch == REST or vel == 0.0:
             t_sample += n_samples
@@ -453,7 +460,27 @@ def progress(label: str, done: int, total: int, width: int = 40):
 # ─────────────────────────────────────────────────────────────────
 #  MAIN
 # ─────────────────────────────────────────────────────────────────
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Render a mathematical Fate Symphony WAV file.")
+    parser.add_argument("--output", default=None, help="Output WAV path (default: fate_symphony.wav)")
+    parser.add_argument("--sample-rate", type=int, default=SAMPLE_RATE, help="Output sample rate in Hz")
+    parser.add_argument("--preview-seconds", type=float, default=None, help="Render only the first N seconds")
+    parser.add_argument("--no-reverb", action="store_true", help="Skip the optional reverb pass")
+    parser.add_argument("--lite", action="store_true", help="Use the low-memory preview profile")
+    args = parser.parse_args()
+    if args.sample_rate < 1000:
+        parser.error("--sample-rate must be at least 1000 Hz")
+    if args.preview_seconds is not None and args.preview_seconds <= 0:
+        parser.error("--preview-seconds must be positive")
+    if args.lite:
+        args.sample_rate = min(args.sample_rate, 11025)
+        args.preview_seconds = args.preview_seconds or 15.0
+        args.no_reverb = True
+    return args
+
+
 def main():
+    args = parse_args()
     print()
     print("  ╔══════════════════════════════════════════════════════╗")
     print("  ║  BEETHOVEN OP.67 — FATE SYMPHONY  [ KEYGEN EDITION ] ║")
@@ -469,7 +496,9 @@ def main():
         print(f"  Rendering voice: {name:<10}", end='')
         sys.stdout.flush()
         t0 = time.time()
-        voices_raw[name] = render_voice(SCORE[name])
+        voices_raw[name] = render_voice(
+            SCORE[name], sr=args.sample_rate, max_seconds=args.preview_seconds
+        )
         elapsed = time.time() - t0
         samples = len(voices_raw[name])
         print(f"  {samples:>8,} samples  ({elapsed:.2f}s)")
@@ -479,9 +508,12 @@ def main():
     mixed = mix_voices(voices_raw)
     print(f"  {len(mixed):,} samples total")
 
-    print("  Applying reverb...", end='', flush=True)
-    mixed = apply_reverb(mixed, room=0.55, damp=0.45, wet=0.22)
-    print("  done")
+    if args.no_reverb:
+        print("  Reverb: skipped (low-resource profile)")
+    else:
+        print("  Applying reverb...", end='', flush=True)
+        mixed = apply_reverb(mixed, room=0.55, damp=0.45, wet=0.22)
+        print("  done")
 
     print("  Normalizing + limiting...", end='', flush=True)
     mixed = normalize(mixed, headroom_db=-2.0)
@@ -489,12 +521,12 @@ def main():
     print("  done")
 
     # Write WAV
-    out_path = os.path.join(os.path.dirname(__file__), 'fate_symphony.wav')
+    out_path = args.output or os.path.join(os.path.dirname(__file__), 'fate_symphony.wav')
     pcm = to_pcm16(mixed)
     with wave.open(out_path, 'wb') as wf:
         wf.setnchannels(CHANNELS)
         wf.setsampwidth(2)
-        wf.setframerate(SAMPLE_RATE)
+        wf.setframerate(args.sample_rate)
         wf.writeframes(pcm)
 
     duration = len(mixed) / SAMPLE_RATE
@@ -504,7 +536,7 @@ def main():
     print("  ╔══════════════════════════════════════════════════════╗")
     print(f"  ║  OUTPUT : fate_symphony.wav                          ║")
     print(f"  ║  Duration: {duration:>6.1f}s   Size: {size_kb:>7.1f} KB              ║")
-    print(f"  ║  Sample rate: {SAMPLE_RATE} Hz   Bit depth: {BIT_DEPTH}-bit         ║")
+    print(f"  ║  Sample rate: {args.sample_rate} Hz   Bit depth: {BIT_DEPTH}-bit         ║")
     print(f"  ║  Voices: strings + brass + bass + timpani            ║")
     print(f"  ║  Engine: additive synthesis + ADSR + Schroeder reverb║")
     print("  ╚══════════════════════════════════════════════════════╝")

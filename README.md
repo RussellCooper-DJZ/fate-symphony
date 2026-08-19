@@ -100,15 +100,27 @@ python3 fate.py
 # Output: fate_symphony.wav
 aplay fate_symphony.wav          # Linux
 ffplay fate_symphony.wav         # Cross-platform
+
+# Low-resource preview: 15 seconds, 11,025 Hz, no reverb
+python3 fate.py --lite --output fate_preview.wav
+
+# Explicit resource controls
+python3 fate.py --sample-rate 16000 --preview-seconds 10 --no-reverb --output preview.wav
 ```
 
 ---
+
+## Low-resource rendering
+
+The default renderer intentionally demonstrates the full synthesis chain. Constrained devices can use `--lite`, which caps the sample rate at 11,025 Hz, renders a bounded 15-second preview by default and skips the optional Schroeder reverb pass. The preview limit is applied before per-voice buffers are allocated, so it reduces peak buffer size instead of merely trimming the final WAV.
+
+`--preview-seconds`, `--sample-rate` and `--no-reverb` can be combined for an explicit quality/latency/memory budget. The project remains Python-standard-library-only in both full and lite modes.
 
 ## Technical Specs
 
 | Parameter | Value |
 |---|---|
-| Sample rate | 44,100 Hz |
+| Sample rate | 44,100 Hz full profile; up to 11,025 Hz in `--lite` |
 | Bit depth | 16-bit PCM |
 | Channels | Mono |
 | Voices | Strings + Brass + Bass + Timpani |
@@ -121,7 +133,8 @@ ffplay fate_symphony.wav         # Cross-platform
 
 ```
 fate-symphony/
-├── fate.py          # Main synthesizer (all-in-one, ~350 lines)
+├── fate.py          # Main synthesizer with full and lite render profiles
+├── tests/           # Lite render regression test
 └── README.md
 ```
 
